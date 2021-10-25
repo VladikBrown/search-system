@@ -1,0 +1,235 @@
+Rust (programming language)
+From Wikipedia, the free encyclopedia
+Jump to navigationJump to search
+Rust
+A capitalised letter R set into a sprocket
+The official Rust logo
+Paradigms	Multi-paradigm: concurrent, functional, generic, imperative, structured
+Designed by	Graydon Hoare
+Developer	The Rust Foundation
+First appeared	July 7, 2010; 11 years ago
+Stable release
+1.56.0[1] Edit this on Wikidata / October 21, 2021; 4 days ago
+Typing discipline	Affine, inferred, nominal, static, strong
+Implementation language	Rust
+OS	Cross-platform
+License	MIT or Apache 2.0[2]
+Filename extensions	.rs, .rlib
+Website	www.rust-lang.org
+Influenced by
+Alef[3]C#[3]C++[3]Cyclone[3][4]Erlang[3]Haskell[3]Limbo[3]Newsqueak[3]OCaml[3]Ruby[3]Scheme[3]Standard ML[3]Swift[3][5]
+Influenced
+CrystalElm[6]Idris[7]Spark[8]Swift[9]Project Verona[10]ZigPHP[11]
+Rust is a multi-paradigm, high-level, general-purpose programming language designed for performance and safety, especially safe concurrency.[12][13] Rust is syntactically similar to C++,[14] but can guarantee memory safety by using a borrow checker to validate references.[15] Rust achieves memory safety without garbage collection, and reference counting is optional.[16][17]
+
+Rust was originally designed by Graydon Hoare at Mozilla Research[18], with contributions from Dave Herman, Brendan Eich, and others.[19][20] The designers refined the language while writing the Servo experimental browser engine,[21] and the Rust compiler. It has gained increasing use in industry, and Microsoft has been experimenting with the language for secure and safety-critical software components.[22][23]
+
+Rust has been voted the "most loved programming language" in the Stack Overflow Developer Survey every year since 2016, though only used by 7% of the respondents in the 2021 survey.[24]
+
+
+Contents
+1	History
+2	Syntax
+3	Features
+3.1	Memory safety
+3.2	Memory management
+3.3	Ownership
+3.4	Types and polymorphism
+4	Components
+4.1	Cargo
+4.2	Rustfmt
+4.3	Clippy
+4.4	RLS
+5	Language extensions
+6	Performance
+7	Adoption
+7.1	Web browsers
+7.2	Experimental operating systems
+7.3	Other
+8	Governance
+9	Development
+10	See also
+11	References
+12	External links
+History
+
+An example of compiling a Rust program
+The language grew out of a personal project begun in 2006 by Mozilla employee Graydon Hoare,[13] who stated that the project was possibly named after the rust family of fungi.[25] Mozilla began sponsoring the project in 2009[13] and announced it in 2010.[26][27] The same year, work shifted from the initial compiler (written in OCaml) to the LLVM-based self-hosting compiler written in Rust.[28] Named rustc, it successfully compiled itself in 2011.[29]
+
+The first numbered pre-alpha release of the Rust compiler occurred in January 2012.[30] Rust 1.0, the first stable release, was released on May 15, 2015.[31][32] Following 1.0, stable point releases are delivered every six weeks, while features are developed in nightly Rust with daily releases, then tested with beta releases that last six weeks.[33][34] Every 2 to 3 years, a new Rust "Edition" is produced. This is to provide an easy reference point for changes due to the frequent nature of Rust's Train release schedule, as well as to provide a window to make breaking changes. Editions are largely compatible.[35]
+
+Along with conventional static typing, before version 0.4, Rust also supported typestates. The typestate system modeled assertions before and after program statements, through use of a special check statement. Discrepancies could be discovered at compile time, rather than at runtime, as might be the case with assertions in C or C++ code. The typestate concept was not unique to Rust, as it was first introduced in the language NIL.[36] Typestates were removed because in practice they were little used,[37] though the same functionality can be achieved by leveraging Rust's move semantics.[38]
+
+The object system style changed considerably within versions 0.2, 0.3, and 0.4 of Rust. Version 0.2 introduced classes for the first time, and version 0.3 added several features, including destructors and polymorphism through the use of interfaces. In Rust 0.4, traits were added as a means to provide inheritance; interfaces were unified with traits and removed as a separate feature. Classes were also removed and replaced by a combination of implementations and structured types.[citation needed]
+
+Starting in Rust 0.9 and ending in Rust 0.11, Rust had two built-in pointer types: ~ and @, simplifying the core memory model. It reimplemented those pointer types in the standard library as Box and (the now removed) Gc.
+
+In January 2014, before the first stable release, Rust 1.0, the editor-in-chief of Dr. Dobb's, Andrew Binstock, commented on Rust's chances of becoming a competitor to C++ and to the other up-and-coming languages D, Go, and Nim (then Nimrod). According to Binstock, while Rust was "widely viewed as a remarkably elegant language", adoption slowed because it repeatedly changed between versions.[39]
+
+Rust has a foreign function interface (FFI) that can be called from, e.g., C language, and can call C. While calling C++ has historically been problematic (from any language), Rust has a library, CXX, to allow calling to or from C++, and "CXX has zero or negligible overhead."[40]
+
+In August 2020, Mozilla laid off 250 of its 1,000 employees worldwide as part of a corporate restructuring caused by the long-term impact of the COVID-19 pandemic.[41][42] Among those laid off were most of the Rust team,[43][better source needed] while the Servo team was completely disbanded.[44][better source needed] The event raised concerns about the future of Rust.[45]
+
+In the following week, the Rust Core Team acknowledged the severe impact of the layoffs and announced that plans for a Rust foundation were underway. The first goal of the foundation would be taking ownership of all trademarks and domain names, and also take financial responsibility for their costs.[46]
+
+On February 8, 2021 the formation of the Rust Foundation was officially announced by its five founding companies (AWS, Huawei, Google, Microsoft, and Mozilla).[47][48]
+
+On April 6, 2021, Google announced support for Rust within Android Open Source Project as an alternative to C/C++.[49]
+
+Syntax
+Here is a "Hello, World!" program written in Rust. The println! macro prints the message to standard output.
+
+fn main() {
+    println!("Hello, World!");
+}
+The syntax of Rust is similar to C and C++, with blocks of code delimited by curly brackets, and control flow keywords such as if, else, while, and for, although the specific syntax for defining functions is more similar to Pascal. Despite the resemblance to C and C++, the syntax of Rust in is closer to that of the ML family of languages and the Haskell language. Nearly every part of a function body is an expression,[50] even control flow operators. For example, the ordinary if expression also takes the place of C's ternary conditional, an idiom used by ALGOL 60. As in Lisp, a function need not end with a return expression: in this case if the semicolon is omitted, the last expression in the function creates the return value, as seen in the following recursive implementation of the factorial function:
+
+fn factorial(i: u64) -> u64 {
+    match i {
+        0 => 1,
+        n => n * factorial(n-1)
+    }
+}
+The following iterative implementation uses the ..= operator to create an inclusive range:
+
+fn factorial(i: u64) -> u64 {
+    (2..=i).product()
+}
+Features
+File:Rust 101.webm
+A presentation on Rust by Emily Dunham from Mozilla's Rust team (linux.conf.au conference, Hobart, 2017)
+Rust is intended to be a language for highly concurrent and highly safe systems,[51] and programming in the large, that is, creating and maintaining boundaries that preserve large-system integrity.[52] This has led to a feature set with an emphasis on safety, control of memory layout, and concurrency.
+
+Memory safety
+Rust is designed to be memory safe. It does not permit null pointers, dangling pointers, or data races.[53][54][55] Data values can be initialized only through a fixed set of forms, all of which require their inputs to be already initialized.[56] To replicate pointers being either valid or NULL, such as in linked list or binary tree data structures, the Rust core library provides an option type, which can be used to test whether a pointer has Some value or None.[54] Rust has added syntax to manage lifetimes, which are checked at compile time by the borrow checker. Unsafe code can subvert some of these restrictions using the unsafe keyword.[15]
+
+Memory management
+Rust does not use automated garbage collection. Memory and other resources are managed through the resource acquisition is initialization convention,[57] with optional reference counting. Rust provides deterministic management of resources, with very low overhead.[58] Rust favors stack allocation of values and does not perform implicit boxing.
+
+There is the concept of references (using the & symbol), which does not involve run-time reference counting. The safety of such pointers is verified at compile time, preventing dangling pointers and other forms of undefined behavior. Rust's type system separates shared, immutable pointers of the form &T from unique, mutable pointers of the form &mut T. A mutable pointer can be coerced to an immutable pointer, but not vice versa.
+
+Ownership
+Rust has an ownership system where all values have a unique owner, and the scope of the value is the same as the scope of the owner.[59][60] Values can be passed by immutable reference, using &T, by mutable reference, using &mut T, or by value, using T. At all times, there can either be multiple immutable references or one mutable reference (an implicit readers–writer lock). The Rust compiler enforces these rules at compile time and also checks that all references are valid.
+
+Types and polymorphism
+
+This section may be confusing or unclear to readers. Please help clarify the section. There might be a discussion about this on the talk page. (August 2021) (Learn how and when to remove this template message)
+The type system supports a mechanism similar to type classes, called traits, inspired by the Haskell language. This facility is for ad hoc polymorphism, achieved by adding constraints to type variable declarations.
+
+Rust uses type inference for variables declared with the keyword let. Such variables do not require a value to be initially assigned to determine their type. A compile time error results if any branch of code leaves the variable without an assignment.[61] Variables assigned multiple times must be marked with the keyword mut (short for mutable).
+
+Functions can be given generic parameters, which usually constrain the generic type to implement a particular trait or traits. Within such a function, the generic value can only be used through those traits. This means that a generic function can be type-checked as soon as it is defined.
+
+The implementation of Rust generics is similar to the typical implementation of C++ templates: a separate copy of the code is generated for each instantiation. This is called monomorphization and contrasts with the type erasure scheme typically used in Java and Haskell. Rust's type erasure is also available by using the keyword dyn. The benefit of monomorphization is optimized code for each specific use case; the drawback is increased compile time and size of the resulting binaries.
+
+In Rust user defined types are created with the struct keyword. These types usually contains fields of data like objects or classes in other languages. The impl keyword can define methods for the struct (data and function are defined separately in a struct) or implement a trait for the structure. A trait is a contract that a structure has certain required methods implemented. Traits are used to restrict generic parameters and because traits can provide a struct with more methods than the user defined. For example, the trait Iterator requires that the next method be defined for the type. Once the next method is defined the trait provides common functional helper methods over the iterator like map or filter.
+
+The object system within Rust is based around implementations, traits and structured types. Implementations fulfill a role similar to that of classes within other languages and are defined with the keyword impl. Traits provide inheritance and polymorphism; they allow methods to be defined and mixed in to implementations. Structured types are used to define fields. Implementations and traits cannot define fields themselves, and only traits can provide inheritance. Among other benefits, this prevents the diamond problem of multiple inheritance, as in C++. In other words, Rust supports interface inheritance but replaces implementation inheritance with composition; see composition over inheritance.
+
+Components
+Rust features a large number of components that extend the Rust feature set and make Rust development easier. Component installation is typically managed by rustup, a Rust toolchain installer developed by the Rust project.[62]
+
+Cargo
+Cargo is Rust's build system and package manager. Cargo handles downloading dependencies, and building dependencies. Cargo also acts as a wrapper for clippy and other Rust components. It requires projects to follow a certain directory structure.[63]
+
+The dependencies for a Rust package are specified in a Cargo.toml file along with version requirements, telling Cargo which versions of the dependency are compatible with the package. By default, Cargo sources its dependencies from the user-contributed registry crates.io but Git repositories and packages in the local filesystem can be specified as dependencies, too.[64]
+
+Rustfmt
+Rustfmt is a code formatter for Rust. It takes Rust source code as input and changes the whitespace and indentation to produce formatted code in accordance to the Rust style guide or rules specified in a rustfmt.toml file. Rustfmt can be invoked as a standalone program or on a Rust project through Cargo. [65][66]
+
+Clippy
+Clippy is Rust's built-in linting tool to improve the correctness, performance, and readability of Rust code. As of 2021, Clippy has more than 450 rules,[67] which can be browsed online and filtered by category.[68] Some rules are disabled by default.
+
+RLS
+RLS is a language server that provides IDEs and text editors with more information about a Rust project. It provides linting checks via Clippy, formatting via Rustfmt, automatic code completion via Racer, among other functions.[69] Development of Racer was slowed down in favor of rust-analyzer.[70]
+
+Language extensions
+It is possible to extend the Rust language using the procedural macro mechanism.[71]
+
+Procedural macros use Rust functions that run at compile time to modify the compiler's token stream. This complements the declarative macro mechanism (also known as macros by example), which uses pattern matching to achieve similar goals.
+
+Procedural macros come in three flavors:
+
+Function-like macros custom!(...)
+Derive macros #[derive(CustomDerive)]
+Attribute macros #[custom_attribute]
+The println! macro is an example of a function-like macro and serde_derive[72] is a commonly used library for generating code for reading and writing data in many formats such as JSON. Attribute macros are commonly used for language bindings such as the extendr library for Rust bindings to R.[73]
+
+The following code shows the use of the Serialize, Deserialize and Debug derive procedural macros to implement JSON reading and writing as well as the ability to format a structure for debugging.
+
+use serde_json::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let point = Point { x: 1, y: 2 };
+
+    let serialized = serde_json::to_string(&point).unwrap();
+    println!("serialized = {}", serialized);
+
+    let deserialized: Point = serde_json::from_str(&serialized).unwrap();
+    println!("deserialized = {:?}", deserialized);
+}
+Performance
+Rust aims "to be as efficient and portable as idiomatic C++, without sacrificing safety".[74] Since Rust utilizes LLVM, any performance improvements in LLVM also carry over to Rust.[75]
+
+Adoption
+See also: Category:Rust (programming language) software
+A bright orange crab icon
+Some Rust users refer to themselves as Rustaceans (a pun on crustacean) and use Ferris as their unofficial mascot.[76]
+Rust was the third-most-loved programming language in the 2015 Stack Overflow annual survey[77] and took first place for 2016–2021.[78][79]
+
+Web browsers
+Firefox has two projects written in Rust: the Servo parallel browser engine[80] developed by Mozilla in collaboration with Samsung;[81] and Quantum, which is composed of several sub-projects for improving Mozilla's Gecko browser engine.[82]
+
+Experimental operating systems
+Redox, a "full-blown Unix-like operating system" including a microkernel[83]
+Theseus, OS with "intralingual design" and a fundamental architecture which embodies Rust concepts[84]
+Other
+Deno, a secure runtime for JavaScript and TypeScript, is built with V8, Rust, and Tokio[85]
+Discord uses Rust for portions of its backend, as well as client-side video encoding,[86] to augment the core infrastructure written in Elixir.[87]
+exa, a "modern replacement for ls"
+The Google Fuchsia capability-based operating system has some[vague] tools written in Rust[88]
+Microsoft Azure IoT Edge, a platform used to run Azure services and artificial intelligence on IoT devices, has components implemented in Rust[89]
+OpenDNS uses Rust in two of its components[90][91][92]
+Polkadot (cryptocurrency), an interconnected internet of blockchains, is written in Rust
+Ruffle, an open-source SWF emulator written in Rust[93]
+Stratis: a file system manager for Fedora[94] and RHEL 8[95]
+Tor, an anonymity network, written in C originally, is experimenting with porting to Rust for its security features[96][97]
+TerminusDB, an open source graph database designed for collaboratively building and curating knowledge graphs[98]
+Such applications as Figma, and Dropbox are written in Rust as well as some components for Amazon, Facebook, and Discord[99]
+Governance
+Rust Foundation
+Rust Foundation logo.png
+Formation	February 8, 2021; 8 months ago
+Founders
+Amazon Web Services
+Google
+Huawei
+Microsoft
+Mozilla Foundation
+Type	Nonprofit organization
+Location
+United States
+Chairperson	Shane Miller
+Executive Director	Ashley Williams (interim)
+Website	foundation.rust-lang.org
+The Rust Foundation is a non-profit membership organization incorporated in Delaware, United States, with the primary purposes of supporting the maintenance and development of the language, cultivating the Rust project team members and user communities, managing the technical infrastructure underlying the development of Rust, and managing and stewarding the Rust trademark.
+
+It was established on February 8, 2021, with five founding corporate members (Amazon Web Services, Huawei, Google, Microsoft, and Mozilla).[100]
+
+The foundation's board is chaired by Shane Miller.[101] Its interim Executive Director is Ashley Williams.
+
+Development
+Rust conferences include:
+
+RustConf: an annual conference in Portland, Oregon. Held annually since 2016 (except in 2020 and 2021 because of the COVID-19 pandemic).[102]
+Rust Belt Rust: a #rustlang conference in the Rust Belt[103]
+RustFest: Europe's @rustlang conference[104]
+RustCon Asia
+Rust LATAM
+Oxidize Global[105]
