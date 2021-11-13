@@ -22,7 +22,7 @@ type MQMessage struct {
 
 func main() {
 	var (
-		m sync.RWMutex
+		m    sync.RWMutex
 		docs []search.DocumentArg
 	)
 	filepath.Walk("./testdata", func(path string, info fs.FileInfo, err error) error {

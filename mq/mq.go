@@ -15,17 +15,17 @@ func SetUpMQConnection(url string, queueName string) (
 	ch, err = conn.Channel()
 	q, err = ch.QueueDeclare(
 		queueName, // name
-		false,   // durable
-		false,   // delete when unused
-		false,   // exclusive
-		false,   // no-wait
-		nil,     // arguments
+		false,     // durable
+		false,     // delete when unused
+		false,     // exclusive
+		false,     // no-wait
+		nil,       // arguments
 	)
 	log.Println("Connection established")
 	return
 }
 
-func ReceiveFromQueue(ch *amqp.Channel, q amqp.Queue, dataFunc func ([]byte)) {
+func ReceiveFromQueue(ch *amqp.Channel, q amqp.Queue, dataFunc func([]byte)) {
 	messages, err := ch.Consume(
 		q.Name, // queue
 		"",     // consumer

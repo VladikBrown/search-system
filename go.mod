@@ -5,6 +5,7 @@ go 1.17
 require (
 	cgt.name/pkg/go-mwclient v1.2.0
 	github.com/gin-gonic/gin v1.7.4
+	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.7.0
 )
 
