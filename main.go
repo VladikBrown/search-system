@@ -22,7 +22,9 @@ func main() {
 		if err != nil {
 			return err
 		}
-		words := strings.Split(string(file), " ")
+		escapedFile := strings.NewReplacer(",", "", "(", "", ")", "", "\n", " ", "\"", "").Replace(string(file))
+		escapedFile = strings.ToLower(escapedFile)
+		words := strings.Split(string(escapedFile), " ")
 		docs = append(docs, search.DocumentArg{
 			Words: words,
 			Name:  info.Name(),
