@@ -39,10 +39,13 @@ function SearchPage() {
                 >
                     SS
                 </h1>
-                <Search onSearch={async query => {
-                    const newSearchParams = new URLSearchParams({query})
-                    setSearchParams(newSearchParams)
-                }}/>
+                <Search
+                    onSearch={async query => {
+                        const newSearchParams = new URLSearchParams({query});
+                        setSearchParams(newSearchParams);
+                    }}
+                    value={searchParams.get('query')}
+                />
             </div>
             <Results items={results}/>
         </div>
