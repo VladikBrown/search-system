@@ -38,7 +38,7 @@ function SearchPage() {
         <div className="SearchPage">
             <Header/>
             {showMetrics ?
-                <Metrics metrics={JSON.stringify(metrics)}/>
+                <Metrics metrics={metrics}/>
                 :
                 <Results items={results}/>
             }
