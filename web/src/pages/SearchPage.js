@@ -3,17 +3,23 @@ import Search from "../components/Search";
 import Results from "../components/Results";
 import {useEffect, useState} from "react";
 import superagent from "superagent";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
+import Header from "../components/Header";
+import Metrics from "../components/Metrics";
+import {BsFillBarChartLineFill} from 'react-icons/bs';
 
 function SearchPage() {
-    const navigate = useNavigate();
     const [results, setResults] = useState([]);
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [metrics, setMetrics] = useState({});
+    const [showMetrics, setShowMetrics] = useState(false);
+    const [searchParams] = useSearchParams();
+
+    const query = searchParams.get('query');
 
     useEffect(() => {
         superagent
             .get('http://localhost:3333/search')
-            .query({query: searchParams.get('query')})
+            .query({query})
             .then(res => {
                 setResults(
                     res.body.Docs
@@ -21,35 +27,32 @@ function SearchPage() {
                         .sort((r1, r2) => r2.similarityRate - r1.similarityRate)
                         .map(r => r.doc)
                 );
+                setMetrics(res.body.metricsAggregator)
             })
             .catch(err => {
                 alert(err)
             });
-    }, [searchParams]);
+    }, [query]);
 
     return (
         <div className="SearchPage">
-            <div className="SearchLine">
-                <h1
-                    style={{
-                        fontSize: '40px',
-                        cursor: 'pointer',
-                    }}
-                    onClick={() => navigate('/')}
-                >
-                    SS
-                </h1>
-                <Search
-                    onSearch={async query => {
-                        const newSearchParams = new URLSearchParams({query});
-                        setSearchParams(newSearchParams);
-                    }}
-                    value={searchParams.get('query')}
-                />
-            </div>
-            <Results items={results}/>
+            <Header/>
+            {showMetrics ?
+                <Metrics metrics={metrics}/>
+                :
+                <Results items={results}/>
+            }
+            <MetricsButton onClick={() => setShowMetrics(!showMetrics)}/>
         </div>
     );
+}
+
+function MetricsButton(props) {
+    return (
+        <div className="MetricsButton" {...props}>
+            <BsFillBarChartLineFill/>
+        </div>
+    )
 }
 
 export default SearchPage;

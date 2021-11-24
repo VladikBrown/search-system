@@ -1,0 +1,16 @@
+.Header {
+    background-color: #282c34;
+    height: 80px;
+    display: flex;
+    color: white;
+}
+
+.Header > * {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.HeaderLogo {
+    font-size: 40px;
+    cursor: pointer;
+}

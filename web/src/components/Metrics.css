@@ -1,0 +1,17 @@
+h1 {
+    margin-left: 10px;
+}
+
+.Table {
+    margin-top: 10px;
+    margin-left: 10px;
+    border: 1px solid #384955;
+    background-color: #fff;
+    border-radius: 0.25rem;
+}
+
+.Chart {
+    margin-top: 50px;
+    border-radius: 0.25rem;
+    width: 650px;
+}

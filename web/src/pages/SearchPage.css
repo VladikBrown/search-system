@@ -11,14 +11,20 @@
     height: 100%;
 }
 
-.SearchLine {
-    background-color: #282c34;
-    height: 80px;
-    display: flex;
-    color: white;
+.MetricsButton {
+    position: absolute;
+    left: 95%;
+    top: 15%;
+    width: 20px;
+    padding: 10px;
+    border: 2px solid #384955;
+    border-radius: 0.25rem;
+    transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+    cursor: pointer;
+    color: #384955;
 }
 
-.SearchLine > * {
-    margin-left: 10px;
-    margin-top: 10px;
+.MetricsButton:hover {
+    background-color: #384955;
+    color: #fff;
 }
