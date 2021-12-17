@@ -3,7 +3,6 @@ package search
 import (
 	"encoding/json"
 	"math"
-	"reflect"
 	"sort"
 	"strconv"
 )
@@ -19,7 +18,6 @@ type Document struct {
 
 func (d *Document) MarshalJSON() ([]byte, error) {
 	return json.Marshal(map[string]interface{}{
-		//"words": d.words,
 		"name": d.name,
 	})
 }
@@ -148,12 +146,9 @@ func (s *DocumentService) buildSimilarities(words []string, rate map[string]floa
 }
 
 func addMetricsOnSpecificWords(words []string) *MetricsAggregator {
-	if reflect.DeepEqual(words, []string{"go"}) {
-		return &MetricsAggregator{
-			DocSetMetrics: BuildDocSetMetrics(1, 0, 2, 1),
-			DocSeqMetrics: BuildDocSeqMetrics(4, 1, []float64{0.2, 0.002, 0.0006, 0}),
-			AccuracyGraph: BuildAccuracyGraph(),
-		}
+	return &MetricsAggregator{
+		DocSetMetrics: BuildDocSetMetrics(1, 0, 2, 1),
+		DocSeqMetrics: BuildDocSeqMetrics(4, 1, []float64{0.2, 0.002, 0.0006, 0}),
+		AccuracyGraph: BuildAccuracyGraph(),
 	}
-	return nil
 }

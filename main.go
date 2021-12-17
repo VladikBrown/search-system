@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
 	"github.com/illfate2/search-system/search"
@@ -33,6 +34,7 @@ func main() {
 	})
 	service := search.BuildDocumentService(docs)
 	r := gin.Default()
+	r.Use(cors.Default())
 	r.GET("/search", func(c *gin.Context) {
 		query := c.Query("query")
 		queryWords := strings.Split(query, " ")
